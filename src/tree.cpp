@@ -1,21 +1,95 @@
-#include "tree.hpp"
+#include "tree.h"
+#include"fila.h"
 
-void treeInit (Tree **t) {
-    *t = NULL;
+Tree* CreateTree(){
+	return NULL;
 }
 
-void treeInsert (Tree **t, Data content, int *previousLevel) {
-    if (*t == NULL) {
-        (*t) = new Tree;
-        (*t) -> fd = NULL;
-        (*t) -> fe = NULL;
-        content.level = *previousLevel + 1;
-        (*t) -> item = content;
-    } else {
-        if ((*t) -> item.value > content.value) {
-            treeInsert(&(*t) -> fe, content, &(*t) -> item.level);
-        } else {
-            treeInsert(&(*t) -> fd, content, &(*t) -> item.level);
-        }
+bool TVazia(Tree **t){
+  return *t == NULL;
+}
+
+void insertTree(Tree **t, Record r){
+
+  if(TVazia(t)){
+    *t = new Tree;
+    (*t)->esq = NULL; 
+    (*t)->dir = NULL; 
+    (*t)->reg = r; 
+  
+  } else {
+    
+    if(r.key < (*t)->reg.key){
+      insertTree(&(*t)->esq, r);
     }
+    
+    if(r.key > (*t)->reg.key){
+      insertTree(&(*t)->dir, r);
+    }
+  
+  }
+
+}
+
+void pesquisa(Tree **t, Tree **aux, Record r){
+
+  if(*t == NULL){
+    printf("[ERROR]: Node not found!");
+    return;
+  }
+
+  if((*t)->reg.key > r.key){ pesquisa(&(*t)->esq, aux, r); return;}
+  if((*t)->reg.key < r.key){ pesquisa(&(*t)->dir, aux, r); return;}
+
+  *aux = *t;
+}
+
+
+int isInTree(Tree *t, Record r) {
+  
+  if(t == NULL){ 
+    return 0;
+  }
+  
+  return t->reg.key == r.key || isInTree(t->esq, r) || isInTree(t->dir, r);
+}
+
+
+void antecessor(Tree **t, Tree *aux){ 
+
+	if ((*t)->dir != NULL){ 
+		antecessor(&(*t)->dir, aux);
+		return;
+  }
+  	
+  aux->reg = (*t)->reg;
+  aux = *t; 
+  *t = (*t)->esq;
+  free(aux);
+} 
+
+
+void removeTree(Tree **t, Record r){
+	Tree *aux;
+  	
+  	if (*t == NULL){ 
+  		printf("[ERROR]: Record not found!!!\n");
+    	return;
+  	}
+
+  	if (r.key < (*t)->reg.key){ removeTree(&(*t)->esq, r); return; }
+  	if (r.key > (*t)->reg.key){ removeTree(&(*t)->dir, r); return; }
+
+  	if ((*t)->dir == NULL){ 
+  		aux = *t;  
+  		*t = (*t)->esq;
+    	free(aux);
+    	return;
+  	}
+
+  	if ((*t)->esq != NULL){ antecessor(&(*t)->esq, *t); return; }
+
+  	aux = *t;  
+  	*t = (*t)->dir;
+  	free(aux);
 }
