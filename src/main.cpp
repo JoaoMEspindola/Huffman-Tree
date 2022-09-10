@@ -1,13 +1,12 @@
-#include "tree.hpp"
-#include <unordored_map>
+#include "map.hpp"
 
 
 int main(){
 
-    unordered_map <string, int**> map;
+    unordered_map <string, Record> map;
 
 
-
+    trataArquivo(map);
 
 
 

@@ -1,95 +1,94 @@
-#include "tree.h"
-#include"fila.h"
+// #include "tree.hpp"
 
-Tree* CreateTree(){
-	return NULL;
-}
+// Tree* CreateTree(){
+// 	return NULL;
+// }
 
-bool TVazia(Tree **t){
-  return *t == NULL;
-}
+// bool TVazia(Tree **t){
+//   return *t == NULL;
+// }
 
-void insertTree(Tree **t, Record r){
+// // void insertTree(Tree **t, Record r){
 
-  if(TVazia(t)){
-    *t = new Tree;
-    (*t)->esq = NULL; 
-    (*t)->dir = NULL; 
-    (*t)->reg = r; 
+// //   if(TVazia(t)){
+// //     *t = new Tree;
+// //     (*t)->esq = NULL; 
+// //     (*t)->dir = NULL; 
+// //     (*t)->reg = r; 
   
-  } else {
+// //   } else {
     
-    if(r.key < (*t)->reg.key){
-      insertTree(&(*t)->esq, r);
-    }
+// //     if(r.key < (*t)->reg.key){
+// //       insertTree(&(*t)->esq, r);
+// //     }
     
-    if(r.key > (*t)->reg.key){
-      insertTree(&(*t)->dir, r);
-    }
+// //     if(r.key > (*t)->reg.key){
+// //       insertTree(&(*t)->dir, r);
+// //     }
   
-  }
+// //   }
 
-}
+// // }
 
-void pesquisa(Tree **t, Tree **aux, Record r){
+// void pesquisa(Tree **t, Tree **aux, Record r){
 
-  if(*t == NULL){
-    printf("[ERROR]: Node not found!");
-    return;
-  }
+//   if(*t == NULL){
+//     printf("[ERROR]: Node not found!");
+//     return;
+//   }
 
-  if((*t)->reg.key > r.key){ pesquisa(&(*t)->esq, aux, r); return;}
-  if((*t)->reg.key < r.key){ pesquisa(&(*t)->dir, aux, r); return;}
+//   if((*t)->reg.key > r.key){ pesquisa(&(*t)->esq, aux, r); return;}
+//   if((*t)->reg.key < r.key){ pesquisa(&(*t)->dir, aux, r); return;}
 
-  *aux = *t;
-}
+//   *aux = *t;
+// }
 
 
-int isInTree(Tree *t, Record r) {
+// int isInTree(Tree *t, Record r) {
   
-  if(t == NULL){ 
-    return 0;
-  }
+//   if(t == NULL){ 
+//     return 0;
+//   }
   
-  return t->reg.key == r.key || isInTree(t->esq, r) || isInTree(t->dir, r);
-}
+//   return t->reg.key == r.key || isInTree(t->esq, r) || isInTree(t->dir, r);
+// }
 
 
-void antecessor(Tree **t, Tree *aux){ 
+// void antecessor(Tree **t, Tree *aux){ 
 
-	if ((*t)->dir != NULL){ 
-		antecessor(&(*t)->dir, aux);
-		return;
-  }
+// 	if ((*t)->dir != NULL){ 
+// 		antecessor(&(*t)->dir, aux);
+// 		return;
+//   }
   	
-  aux->reg = (*t)->reg;
-  aux = *t; 
-  *t = (*t)->esq;
-  free(aux);
-} 
+//   aux->reg = (*t)->reg;
+//   aux = *t; 
+//   *t = (*t)->esq;
+//   free(aux);
+// } 
 
 
-void removeTree(Tree **t, Record r){
-	Tree *aux;
+// void removeTree(Tree **t, Record r){
+// 	Tree *aux;
   	
-  	if (*t == NULL){ 
-  		printf("[ERROR]: Record not found!!!\n");
-    	return;
-  	}
+//   	if (*t == NULL){ 
+//   		printf("[ERROR]: Record not found!!!\n");
+//     	return;
+//   	}
 
-  	if (r.key < (*t)->reg.key){ removeTree(&(*t)->esq, r); return; }
-  	if (r.key > (*t)->reg.key){ removeTree(&(*t)->dir, r); return; }
+//   	if (r.key < (*t)->reg.key){ removeTree(&(*t)->esq, r); return; }
+//   	if (r.key > (*t)->reg.key){ removeTree(&(*t)->dir, r); return; }
 
-  	if ((*t)->dir == NULL){ 
-  		aux = *t;  
-  		*t = (*t)->esq;
-    	free(aux);
-    	return;
-  	}
+//   	if ((*t)->dir == NULL){ 
+//   		aux = *t;  
+//   		*t = (*t)->esq;
+//     	free(aux);
+//     	return;
+//   	}
 
-  	if ((*t)->esq != NULL){ antecessor(&(*t)->esq, *t); return; }
+//   	if ((*t)->esq != NULL){ antecessor(&(*t)->esq, *t); return; }
 
-  	aux = *t;  
-  	*t = (*t)->dir;
-  	free(aux);
-}
+//   	aux = *t;  
+//   	*t = (*t)->dir;
+//   	free(aux);
+// }

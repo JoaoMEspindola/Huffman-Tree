@@ -1,16 +1,20 @@
-#ifndef TREE_H 
-#define TREE_H
+#ifndef TREE_HPP
+#define TREE_HPP
 
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
+#include <unordered_map>
+#include <iostream>
+#include <string>
 
 typedef struct Record Record;
 typedef struct Tree Tree;
 
 struct Record{
-	int key;
-	int value;
+	string palavra;
+	int cont;
+	int RP;
 };
 
 struct Tree{
