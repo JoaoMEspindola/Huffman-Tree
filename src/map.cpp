@@ -18,32 +18,38 @@ string string_treatment(string s) {
 void trataArquivo(unordered_map<string, Record> map){
 
     ifstream myfile;
-	string line, auxiliar, auxiliar_2, delimiter = " ";
-	Record aux;
+	string line, auxiliar, auxiliar_2, delimiter = " ", aux;
 	size_t pos = 0;
 	myfile.open("test.txt");
 
 	if (myfile.is_open()) {
 		while(!myfile.eof()) {
 			getline(myfile, line);
-			aux.palavra = line;
+			aux = line;
+
 			while ((pos = line.find(delimiter)) != string::npos) {
-				aux.palavra = (line.substr(0, pos));
+				aux = (line.substr(0, pos));
 				line.erase(0, pos + delimiter.size());
 				auxiliar = aux;
 				auxiliar_2 = string_treatment(auxiliar);
-				aux.palavra = auxiliar_2;
+				aux = auxiliar_2;
 
-                if (!(verificaMapa(map, aux.palavra))){
-                    map.emplace(palavra, aux);
-                    aux.cont = 1;
-                }else{
-                    cout << "Palavra encontrada no Mapa: " << palavra << endl;
-                    map[palavra].cont++;
-                }
+				if (aux.compare("a") && aux.compare("nos") && aux.compare("à") && aux.compare("e") && aux.compare("ser") && aux.compare("é")
+					&& aux.compare("uma") && aux.compare("em") && aux.compare("como") && aux.compare("por") && aux.compare("da") && aux.compare("das")
+					&& aux.compare("dos") && aux.compare("um") && aux.compare("com") && aux.compare("o") && aux.compare("de") && aux.compare("do") && aux.compare("no")
+					&& aux.compare("na") && aux.compare("que") && aux.compare("se") && aux.compare("ao") && aux.compare("as") && aux.compare("não")){
+
+					if (!(verificaMapa(map, aux))){
+						map[aux].RP = 1;
+					}else{
+						map[aux].RP++;
+					}
+				}
 			}
 		}
 	}
+
+	normalizaMapa(map);
 
 	myfile.close();
 }
@@ -56,4 +62,86 @@ bool verificaMapa(unordered_map<string, Record> map, string key) {
     }
     
     return false;
+}
+
+unordered_map <string, Record> normalizaMapa(unordered_map <string, Record> map){
+	vector <int> vet;
+	bool swapped = true;
+
+	for (unordered_map <string, Record>::iterator it = map.begin(); it != map.end(); it++){
+		vet.push_back(it->second.RP);
+	}
+
+	for (vector <int>:: iterator it = vet.begin(); it != vet.end(); it++){
+		cout << "VETOR: " << *it << " ";
+	}
+
+	while (swapped){
+		swapped = false;
+		for (size_t i = 0; i < vet.size()-1; i++){
+			if (vet[i] > vet[i+1]){
+				vet[i] += vet[i+1];
+				vet[i+1] = vet[i] - vet[i+1];
+				vet[i] -= vet[i+1];
+				swapped = true;
+			}
+		}
+	}
+	cout << endl;
+	for (vector <int>:: iterator it = vet.begin(); it != vet.end(); it++){
+		cout << "VETOR: " << *it << " ";
+	}
+
+	for (unordered_map <string, Record>::iterator it = map.begin(); it != map.end(); it++){
+		it->second.normalizedRP = calculaRP(vet[vet.size()-1], vet[0], it->second.RP);
+		cout << endl << "MAPA NORMALIZADO" << it->second.normalizedRP << " ";
+	}
+
+	return map;
+}
+
+float calculaRP(int RPmax, int RPmin, int RP){ 
+	return (float) RP / (RPmax - RPmin);
+}
+
+void fazFloresta(unordered_map<string, Record> map){
+	vector <Tree*> forestVet;
+
+	Tree* forestAux;
+
+	for (unordered_map <string, Record>::iterator it = map.begin(); it != map.end(); it++){
+		forestAux = new Tree;
+
+   		forestAux->esq = NULL; 
+    	forestAux->dir = NULL; 
+
+		forestAux->reg.palavra = it->first;
+		forestAux->reg.RP = it->second.RP;
+
+		forestVet.push_back(forestAux);
+	}
+
+	sort(forestVet.begin(), forestVet.end(), cmp);
+
+	while (forestVet.size() != 1){
+		Tree* newTree = new Tree;
+
+		newTree->reg.RP = forestVet[0]->reg.RP + forestVet[1]->reg.RP;
+		newTree->esq = forestVet[0];
+		newTree->dir = forestVet[1];
+
+		forestVet.erase(forestVet.begin(), forestVet.begin()+2);
+
+		for (size_t i = 0; i < forestVet.size(); i++){
+			if (forestVet[i+1]->reg.RP > newTree->reg.RP){
+				forestVet.insert(forestVet.begin() + i, newTree);
+			}
+		}
+	}
+
+
+}
+
+bool cmp(Tree* tree1, Tree* tree2){
+	return tree1->reg.RP < tree2->reg.RP;
 }

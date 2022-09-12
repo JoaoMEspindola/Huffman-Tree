@@ -6,10 +6,9 @@ int main(){
     unordered_map <string, Record> map;
 
 
-    trataArquivo(map);
+    map = normalizaMapa(map);
 
-
-
+    fazFloresta(map);
 
 
     return 0;

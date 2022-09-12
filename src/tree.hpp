@@ -1,20 +1,21 @@
 #ifndef TREE_HPP
 #define TREE_HPP
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<stdbool.h>
+#include <fstream>
 #include <unordered_map>
 #include <iostream>
-#include <string>
+#include <string.h>
+#include <algorithm>
+#include <vector>
+using namespace std;
 
 typedef struct Record Record;
 typedef struct Tree Tree;
 
 struct Record{
 	string palavra;
-	int cont;
 	int RP;
+	float normalizedRP;
 };
 
 struct Tree{
