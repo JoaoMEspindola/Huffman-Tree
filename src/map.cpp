@@ -50,8 +50,8 @@ void trataArquivo(unordered_map<string, Record> map){
 	}
 
 	normalizaMapa(map);
-
 	myfile.close();
+
 }
 
 bool verificaMapa(unordered_map<string, Record> map, string key) {
@@ -64,7 +64,7 @@ bool verificaMapa(unordered_map<string, Record> map, string key) {
     return false;
 }
 
-unordered_map <string, Record> normalizaMapa(unordered_map <string, Record> map){
+void normalizaMapa(unordered_map <string, Record> map){
 	vector <int> vet;
 	bool swapped = true;
 
@@ -97,7 +97,8 @@ unordered_map <string, Record> normalizaMapa(unordered_map <string, Record> map)
 		cout << endl << "MAPA NORMALIZADO" << it->second.normalizedRP << " ";
 	}
 
-	return map;
+	fazFloresta(map);
+
 }
 
 float calculaRP(int RPmax, int RPmin, int RP){ 
@@ -106,42 +107,99 @@ float calculaRP(int RPmax, int RPmin, int RP){
 
 void fazFloresta(unordered_map<string, Record> map){
 	vector <Tree*> forestVet;
+	vector <Tree*> orderedVet;
 
 	Tree* forestAux;
+	Tree* treeAux;
 
 	for (unordered_map <string, Record>::iterator it = map.begin(); it != map.end(); it++){
 		forestAux = new Tree;
+
+		// cout << "BIBAO";
 
    		forestAux->esq = NULL; 
     	forestAux->dir = NULL; 
 
 		forestAux->reg.palavra = it->first;
-		forestAux->reg.RP = it->second.RP;
+		forestAux->reg.normalizedRP = it->second.normalizedRP;
 
 		forestVet.push_back(forestAux);
+
+		cout << forestVet.size();
+		// for (size_t i = 0; i < forestVet.size(); i++)
+		// 	cout << "VETOR: " << forestVet[i]->reg.normalizedRP << " ";
 	}
 
-	sort(forestVet.begin(), forestVet.end(), cmp);
 
-	while (forestVet.size() != 1){
-		Tree* newTree = new Tree;
+	// for (size_t i = 0; i < forestVet.size(); i++){
+	// 	cout << "ANTES: " << forestVet[i]->reg.normalizedRP << " ";
+	// }
+	
+	orderedVet = sortTree(forestVet);
+	
 
-		newTree->reg.RP = forestVet[0]->reg.RP + forestVet[1]->reg.RP;
-		newTree->esq = forestVet[0];
-		newTree->dir = forestVet[1];
+	cout << endl << endl;
 
-		forestVet.erase(forestVet.begin(), forestVet.begin()+2);
+	// for (size_t i = 0; i < orderedVet.size(); i++){
+	// 	// cout << "DEPOIS: " << orderedVet[i]->reg.normalizedRP << " ";
+	// }
 
-		for (size_t i = 0; i < forestVet.size(); i++){
-			if (forestVet[i+1]->reg.RP > newTree->reg.RP){
-				forestVet.insert(forestVet.begin() + i, newTree);
-			}
+
+	
+	while (orderedVet.size() > 1){
+		treeAux = new Tree;
+		
+		orderedVet[0]->reg.charBin = 0;
+		orderedVet[1]->reg.charBin = 1;
+
+		for (size_t i = 0; i < orderedVet.size(); i++){
+			cout << orderedVet[i]->reg.charBin << " ";
 		}
+
+		treeAux->reg.normalizedRP = orderedVet[0]->reg.normalizedRP + orderedVet[1]->reg.normalizedRP;
+
+		treeAux->esq = orderedVet[0];
+		treeAux->dir = orderedVet[1];
+		
+		orderedVet.erase(orderedVet.begin(), orderedVet.begin()+2);
+
+		orderedVet.push_back(treeAux);
+
+		orderedVet = sortTree(orderedVet);
+
+		// for (size_t i = 0; i < orderedVet.size(); i++){
+		// 	if (treeAux->reg.normalizedRP < orderedVet[i+1]->reg.normalizedRP){
+		// 		orderedVet.insert(orderedVet.begin() + i, treeAux);
+		// 	}
+		// }
+
+		// for (size_t i = 0; i < orderedVet.size(); i++){
+		// 	cout << endl << "VETOR MUDANDO INSERT: " << orderedVet[i]->reg.normalizedRP << " ";
+		// }
+
+		cout << endl;
+
 	}
 
 
 }
 
-bool cmp(Tree* tree1, Tree* tree2){
-	return tree1->reg.RP < tree2->reg.RP;
+vector<Tree*> sortTree(vector <Tree*> vetTree){
+	Tree* sortAux;
+	sortAux = new Tree;
+	bool swapped = true;
+
+	while(swapped){
+		swapped = false;
+		for (size_t i = 0; i < vetTree.size()-1; i++){
+			if(vetTree[i]->reg.normalizedRP > vetTree[i+1]->reg.normalizedRP){
+				sortAux = vetTree[i];
+				vetTree[i] = vetTree[i+1];
+				vetTree[i+1] = sortAux;
+				swapped = true;
+			}
+		}
+	}
+	
+	return vetTree;
 }

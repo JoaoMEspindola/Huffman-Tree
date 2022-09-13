@@ -4,12 +4,8 @@
 int main(){
 
     unordered_map <string, Record> map;
+    
 
-
-    map = normalizaMapa(map);
-
-    fazFloresta(map);
-
-
+    trataArquivo(map);
     return 0;
 }

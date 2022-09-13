@@ -16,6 +16,7 @@ struct Record{
 	string palavra;
 	int RP;
 	float normalizedRP;
+	bool charBin;
 };
 
 struct Tree{
