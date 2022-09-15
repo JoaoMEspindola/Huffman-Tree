@@ -30,6 +30,7 @@ void insertTree(Tree **t, Record r);
 void pesquisa(Tree **t, Tree **aux, Record r);
 int isInTree(Tree *t, Record r);
 
+void widthPath(Tree *t);
 void removeTree(Tree **t, Record r);
 void antecessor(Tree **t, Tree *aux);
 

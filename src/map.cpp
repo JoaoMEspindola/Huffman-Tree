@@ -115,8 +115,6 @@ void fazFloresta(unordered_map<string, Record> map){
 	for (unordered_map <string, Record>::iterator it = map.begin(); it != map.end(); it++){
 		forestAux = new Tree;
 
-		// cout << "BIBAO";
-
    		forestAux->esq = NULL; 
     	forestAux->dir = NULL; 
 
@@ -124,37 +122,14 @@ void fazFloresta(unordered_map<string, Record> map){
 		forestAux->reg.normalizedRP = it->second.normalizedRP;
 
 		forestVet.push_back(forestAux);
-
-		cout << forestVet.size();
-		// for (size_t i = 0; i < forestVet.size(); i++)
-		// 	cout << "VETOR: " << forestVet[i]->reg.normalizedRP << " ";
 	}
-
-
-	// for (size_t i = 0; i < forestVet.size(); i++){
-	// 	cout << "ANTES: " << forestVet[i]->reg.normalizedRP << " ";
-	// }
 	
 	orderedVet = sortTree(forestVet);
-	
 
 	cout << endl << endl;
-
-	// for (size_t i = 0; i < orderedVet.size(); i++){
-	// 	// cout << "DEPOIS: " << orderedVet[i]->reg.normalizedRP << " ";
-	// }
-
-
 	
 	while (orderedVet.size() > 1){
 		treeAux = new Tree;
-		
-		orderedVet[0]->reg.charBin = 0;
-		orderedVet[1]->reg.charBin = 1;
-
-		for (size_t i = 0; i < orderedVet.size(); i++){
-			cout << orderedVet[i]->reg.charBin << " ";
-		}
 
 		treeAux->reg.normalizedRP = orderedVet[0]->reg.normalizedRP + orderedVet[1]->reg.normalizedRP;
 
@@ -167,21 +142,8 @@ void fazFloresta(unordered_map<string, Record> map){
 
 		orderedVet = sortTree(orderedVet);
 
-		// for (size_t i = 0; i < orderedVet.size(); i++){
-		// 	if (treeAux->reg.normalizedRP < orderedVet[i+1]->reg.normalizedRP){
-		// 		orderedVet.insert(orderedVet.begin() + i, treeAux);
-		// 	}
-		// }
-
-		// for (size_t i = 0; i < orderedVet.size(); i++){
-		// 	cout << endl << "VETOR MUDANDO INSERT: " << orderedVet[i]->reg.normalizedRP << " ";
-		// }
-
 		cout << endl;
-
 	}
-
-
 }
 
 vector<Tree*> sortTree(vector <Tree*> vetTree){

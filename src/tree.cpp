@@ -92,3 +92,33 @@ void removeTree(Tree **t, Record r){
   	*t = (*t)->dir;
   	free(aux);
 }
+
+void widthPath(Tree *t){
+  Fila q;
+  Item no, filho;
+  
+  FFVazia(&q);
+  no.p = t;
+  Enfileira(&q, no);
+
+  while (!isVazia(&q)){
+
+    Desenfileira(&q, &no);
+    printf("%d ", no.p->reg.key);
+
+    if(no.p->esq != NULL){
+      filho.p = no.p->esq;
+      Enfileira(&q, filho);
+      //printf(" Entrei esquerda! ");
+    }
+
+    if(no.p->dir != NULL){
+      filho.p = no.p->dir;
+      Enfileira(&q, filho);
+      //printf(" Entrei direita! ");
+    }
+
+  }
+
+
+}
