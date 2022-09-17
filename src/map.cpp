@@ -20,7 +20,7 @@ void trataArquivo(unordered_map<string, Record> map){
     ifstream myfile;
 	string line, auxiliar, auxiliar_2, delimiter = " ", aux;
 	size_t pos = 0;
-	myfile.open("test.txt");
+	myfile.open("politica.txt");
 
 	if (myfile.is_open()) {
 		while(!myfile.eof()) {
@@ -70,9 +70,9 @@ void normalizaMapa(unordered_map <string, Record> map){
 	}
 
 	for (vector <int>:: iterator it = vet.begin(); it != vet.end(); it++){
-		cout << "VETOR: " << *it << " ";
+		// cout << "VETOR: " << *it << " ";
 	}
-	cout << endl;
+	// cout << endl;
 	while (swapped){
 		swapped = false;
 		for (size_t i = 0; i < vet.size()-1; i++){
@@ -85,7 +85,7 @@ void normalizaMapa(unordered_map <string, Record> map){
 		}
 	}
 	for (vector <int>:: iterator it = vet.begin(); it != vet.end(); it++){
-		cout << "VETOR: " << *it << " ";
+		// cout << "VETOR: " << *it << " ";
 	}
 
 	for (unordered_map <string, Record>::iterator it = map.begin(); it != map.end(); it++){
@@ -184,7 +184,6 @@ vector <bool> stringToBoolVector(string palavraBin){
 		}else{
 			binVet.push_back(0);
 		}
-		cout << vetPalavra[i];
 	}
 
 	return binVet;
@@ -196,12 +195,11 @@ void writeBinFile(unordered_map <string, string> stringMap){
 	string line;
 	vector <bool> vetBin;
 
-	fileBin.open("binSample.dat", ios_base::out | ios_base::binary | ios_base::app);
-	file.open("test.txt");
+	fileBin.open("binSample.dat", ios_base::out | ios_base::binary);
+	file.open("politica.txt");
 	while(!file.eof()){
 		getline(file, line, ' ');
 		if((stringMap.find(line) != stringMap.end())){
-			cout << endl;
 			vetBin = stringToBoolVector(stringMap[line]);
 			for (size_t i = 0; i < vetBin.size(); i++){
 				fileBin.put(vetBin[i]);
@@ -226,9 +224,9 @@ void widthPath(Tree *t){
   while (!isVazia(&q)){
 
     Desenfileira(&q, &no);
-    cout << endl;
-    cout << " " << no.p->reg.palavra;
-    cout << " " << no.p->reg.wordBin;
+    // cout << endl;
+    // cout << " " << no.p->reg.palavra;
+    // cout << " " << no.p->reg.wordBin;
 
     if(no.p->esq != NULL){
       filho.p = no.p->esq;
