@@ -1,4 +1,5 @@
 #include "tree.hpp"
+#include "fila.hpp"
 
 Tree* CreateTree(){
   return NULL;
@@ -37,8 +38,14 @@ void pesquisa(Tree **t, Tree **aux, Record r){
     return;
   }
 
-  if((*t)->reg.normalizedRP > r.normalizedRP){ pesquisa(&(*t)->esq, aux, r); return;}
-  if((*t)->reg.normalizedRP < r.normalizedRP){ pesquisa(&(*t)->dir, aux, r); return;}
+  if((*t)->reg.normalizedRP > r.normalizedRP){ 
+    pesquisa(&(*t)->esq, aux, r); 
+    return;
+  }
+  if((*t)->reg.normalizedRP < r.normalizedRP){
+    pesquisa(&(*t)->dir, aux, r);
+    return;
+  }
 
   *aux = *t;
 }
@@ -104,21 +111,23 @@ void widthPath(Tree *t){
   while (!isVazia(&q)){
 
     Desenfileira(&q, &no);
-    printf("%d ", no.p->reg.key);
+    // cout << endl;
+    // cout << " " << no.p->reg.palavra;
+    // cout << " " << no.p->reg.vetBin;
 
     if(no.p->esq != NULL){
       filho.p = no.p->esq;
+      filho.p->reg.vetBin = no.p->reg.vetBin + '0';
       Enfileira(&q, filho);
-      //printf(" Entrei esquerda! ");
+      // printf(" Entrei esquerda! ");
     }
 
     if(no.p->dir != NULL){
       filho.p = no.p->dir;
       Enfileira(&q, filho);
-      //printf(" Entrei direita! ");
+      filho.p->reg.vetBin = no.p->reg.vetBin + '1';
+      // printf(" Entrei direita! ");
     }
 
   }
-
-
 }

@@ -7,5 +7,6 @@ int main(){
     
 
     trataArquivo(map);
+
     return 0;
 }

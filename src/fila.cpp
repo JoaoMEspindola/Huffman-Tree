@@ -1,4 +1,4 @@
-#include "fila.h"
+#include "fila.hpp"
 
 void FFVazia(Fila *f){
 	f->first = (Block*) malloc (sizeof(Block));
