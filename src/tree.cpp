@@ -1,5 +1,4 @@
 #include "tree.hpp"
-#include "fila.hpp"
 
 Tree* CreateTree(){
   return NULL;
@@ -98,36 +97,4 @@ void removeTree(Tree **t, Record r){
   	aux = *t;  
   	*t = (*t)->dir;
   	free(aux);
-}
-
-void widthPath(Tree *t){
-  Fila q;
-  Item no, filho;
-  
-  FFVazia(&q);
-  no.p = t;
-  Enfileira(&q, no);
-
-  while (!isVazia(&q)){
-
-    Desenfileira(&q, &no);
-    // cout << endl;
-    // cout << " " << no.p->reg.palavra;
-    // cout << " " << no.p->reg.vetBin;
-
-    if(no.p->esq != NULL){
-      filho.p = no.p->esq;
-      filho.p->reg.vetBin = no.p->reg.vetBin + '0';
-      Enfileira(&q, filho);
-      // printf(" Entrei esquerda! ");
-    }
-
-    if(no.p->dir != NULL){
-      filho.p = no.p->dir;
-      Enfileira(&q, filho);
-      filho.p->reg.vetBin = no.p->reg.vetBin + '1';
-      // printf(" Entrei direita! ");
-    }
-
-  }
 }

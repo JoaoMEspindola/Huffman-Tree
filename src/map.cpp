@@ -175,10 +175,77 @@ vector<Tree*> sortTree(vector <Tree*> vetTree){
 vector <bool> stringToBoolVector(string palavraBin){
 	char vetPalavra[palavraBin.length() + 1];
 	vector <bool> binVet;
-	for (size_t i = 0; i < palavraBin.length() + 1; i++){
-		binVet[i] = vetPalavra[i];
+
+	strcpy(vetPalavra, palavraBin.c_str());
+
+	for (size_t i = 0; i < palavraBin.length(); i++){
+		if(vetPalavra[i] == '1'){
+			binVet.push_back(1);
+		}else{
+			binVet.push_back(0);
+		}
+		cout << vetPalavra[i];
 	}
+
 	return binVet;
 }
 
-void writeBinFile(pair <string, vector<bool>> pair);
+void writeBinFile(unordered_map <string, string> stringMap){
+	fstream fileBin;
+	ifstream file;
+	string line;
+	vector <bool> vetBin;
+
+	fileBin.open("binSample.dat", ios_base::out | ios_base::binary | ios_base::app);
+	file.open("test.txt");
+	while(!file.eof()){
+		getline(file, line, ' ');
+		if((stringMap.find(line) != stringMap.end())){
+			cout << endl;
+			vetBin = stringToBoolVector(stringMap[line]);
+			for (size_t i = 0; i < vetBin.size(); i++){
+				fileBin.put(vetBin[i]);
+			}
+			fileBin.put(' ');
+			vetBin.clear();
+		}
+	}
+	fileBin.close();
+	file.close();
+}
+
+void widthPath(Tree *t){
+  Fila q;
+  Item no, filho;
+  unordered_map <string, string> mapAux;
+
+  FFVazia(&q);
+  no.p = t;
+  Enfileira(&q, no);
+
+  while (!isVazia(&q)){
+
+    Desenfileira(&q, &no);
+    cout << endl;
+    cout << " " << no.p->reg.palavra;
+    cout << " " << no.p->reg.wordBin;
+
+    if(no.p->esq != NULL){
+      filho.p = no.p->esq;
+	  filho.p->reg.wordBin = no.p->reg.wordBin + '0';
+	  mapAux.emplace(filho.p->reg.palavra, filho.p->reg.wordBin);
+      Enfileira(&q, filho);
+      // printf(" Entrei esquerda! ");
+    }
+
+    if(no.p->dir != NULL){
+      filho.p = no.p->dir;
+	  filho.p->reg.wordBin = no.p->reg.wordBin + '1';
+	  mapAux.emplace(filho.p->reg.palavra, filho.p->reg.wordBin);
+      Enfileira(&q, filho);
+      // printf(" Entrei direita! ");
+    }
+  }
+
+	writeBinFile(mapAux);
+}

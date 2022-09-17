@@ -2,6 +2,8 @@
 #define MAP_HPP
 
 #include "tree.hpp"
+#include "fila.hpp"
+#include <ostream>
 
 using namespace std;
 
@@ -14,6 +16,7 @@ void fazFloresta(unordered_map<string, Record> map);
 vector <Tree*> sortTree(vector <Tree*> vetTree);
 void codificaPalavra(Tree *t);
 vector <bool> stringToBoolVector(string palavraBin);
-void writeBinFile(pair <string, vector<bool>> pair);
+void writeBinFile(unordered_map<string, Record> stringMap);
+void widthPath(Tree *t);
 
 #endif
