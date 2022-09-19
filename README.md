@@ -30,6 +30,10 @@ Para a resolução do problema era necessário a implementação de um arquivo t
 ### Função trataArquivo()
 <p align="justify">Tendo a necessidade de comprimir um arquivo texto, essa função tem o trabalho de: fazer a primeira leitura do texto e contabilizar a quantidade de vezes que cada palavra do texto repete. Para realizar o ato de armazenar as palavras e acessá-las posteriormente, utilizou-se o <a href="https://cplusplus.com/reference/unordered_map/unordered_map/">unordered_map</a>, um mapa desordenado do tipo <i><b>Hash</i></b>.</p>
 
+---
+
+### Funções próprias do trabalho
+
 ### Função verificaMapa()
 <p align="justify">Recebe o mapa anteriormente preenchido e a chave a ser pesquisada, que no caso deste trabalho é a própria palavra. Se a palavra existir no mapa, retorna-se <i>True</i> e soma +1 na contagem de repetição daquela, concluindo assim o item (1) do enunciado.</p>
 
@@ -63,6 +67,8 @@ Para a resolução do problema era necessário a implementação de um arquivo t
 <p align="justify">Com a inserção das representações binárias em um arquivo binário, conclui-se o último item do enunciado.</p>
 
 <p align="justify">Segue um exemplo de aplicação, o ganho de espaço neste exemplo foi de 16%.</p>
+
+---
 
 ## Exemplo
 
