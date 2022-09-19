@@ -34,7 +34,7 @@ void trataArquivo(unordered_map<string, Record> map){
 				auxiliar_2 = string_treatment(auxiliar);
 				aux = auxiliar_2;
 
-				if (aux.compare("a") && aux.compare("à") && aux.compare("e") && aux.compare("é") && aux.compare("o")){
+				if (aux.compare("a") && aux.compare("à") && aux.compare("e") && aux.compare("é") && aux.compare("o") && aux.compare("as") && aux.compare("da") && aux.compare("de") && aux.compare("das") && aux.compare("do") && aux.compare("os") && aux.compare("dos") && aux.compare("no") && aux.compare("que") && aux.compare("na")){
 
 					if (!(verificaMapa(map, aux))){
 						map[aux].RP = 1;
@@ -180,9 +180,9 @@ vector <bool> stringToBoolVector(string palavraBin){
 
 	for (size_t i = 0; i < palavraBin.length(); i++){
 		if(vetPalavra[i] == '1'){
-			binVet.push_back(1);
+			binVet.push_back(true);
 		}else{
-			binVet.push_back(0);
+			binVet.push_back(false);
 		}
 	}
 
@@ -224,9 +224,9 @@ void widthPath(Tree *t){
   while (!isVazia(&q)){
 
     Desenfileira(&q, &no);
-    // cout << endl;
-    // cout << " " << no.p->reg.palavra;
-    // cout << " " << no.p->reg.wordBin;
+    cout << endl;
+    cout << " " << no.p->reg.palavra;
+    cout << " " << no.p->reg.wordBin;
 
     if(no.p->esq != NULL){
       filho.p = no.p->esq;
